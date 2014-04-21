@@ -267,6 +267,7 @@
 				<action android:name="org.transdroid.control.RESUME_ALL" />
 				<action android:name="org.transdroid.control.START_ALL" />
 				<action android:name="org.transdroid.control.STOP_ALL" />
+				<action android:name="org.transdroid.control.SLOW_MODE" />
 			</intent-filter>
 		</service>
 

@@ -17,6 +17,7 @@ import org.transdroid.daemon.task.ResumeAllTask;
 import org.transdroid.daemon.task.SetTransferRatesTask;
 import org.transdroid.daemon.task.StartAllTask;
 import org.transdroid.daemon.task.StopAllTask;
+import org.transdroid.daemon.task.SetAlternativeModeTask;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -31,6 +32,8 @@ public class ControlService extends IntentService {
 	public static final String INTENT_RESUMEALL = "org.transdroid.control.RESUME_ALL";
 	public static final String INTENT_STARTALL = "org.transdroid.control.START_ALL";
 	public static final String INTENT_STOPALL = "org.transdroid.control.STOP_ALL";
+	public static final String INTENT_SLOWMODE = "org.transdroid.control.SLOW_MODE";
+	public static final String EXTRA_SLOW_MODE_STATUS = "ALT_MODE";
 	public static final String EXTRA_DAEMON = "DAEMON";
 	public static final String EXTRA_UPLOAD_RATE = "UPLOAD_RATE";
 	public static final String EXTRA_DOWNLOAD_RATE = "DOWNLOAD_RATE";
@@ -107,6 +110,10 @@ public class ControlService extends IntentService {
 			task = StartAllTask.create(adapter, false);
 		} else if (intent.getAction().equals(INTENT_STOPALL)) {
 			task = StopAllTask.create(adapter);
+		} else if (intent.getAction().equals(INTENT_SLOWMODE)) {
+			int i = intent.getIntExtra(EXTRA_SLOW_MODE_STATUS,0);
+		    boolean slowMode = (i != 0);
+			task = SetAlternativeModeTask.create(adapter, slowMode);
 		} else if (intent.getAction().equals(INTENT_SETTRANSFERRATES)) {
 			// NOTE: If the upload or download rate was not specified, it will be reset on the server instead
 			int uploadRate = intent.getIntExtra(EXTRA_UPLOAD_RATE, -1);
